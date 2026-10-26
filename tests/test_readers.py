@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 import types
 from pathlib import Path
+from typing import Self
 
 import pytest
 
@@ -21,7 +22,7 @@ class _FakeKey:
         self.values: dict[str, str | int] = {}
         self.subkeys: dict[str, _FakeKey] = {}
 
-    def __enter__(self) -> _FakeKey:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *args: object) -> None:
