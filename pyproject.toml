@@ -7,7 +7,12 @@ requires-python = ">=3.12"
 dependencies = ["pycryptodome>=4.0.1"]
 
 [dependency-groups]
-dev = ["mypy>=2.4.0", "pytest>=9.1.1", "ruff>=0.17.1"]
+dev = [
+    "mypy>=2.4.0",
+    "pytest>=9.1.1",
+    "pytest-timeout>=2.4.0",
+    "ruff>=0.17.1",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -34,3 +39,4 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+timeout = 120
