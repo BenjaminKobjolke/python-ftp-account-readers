@@ -1,0 +1,36 @@
+[project]
+name = "python-ftp-account-readers"
+version = "0.1.0"
+description = "Read saved FTP accounts from WinSCP, FileZilla and Notepad++ NppFTP"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pycryptodome>=4.0.1"]
+
+[dependency-groups]
+dev = ["mypy>=2.4.0", "pytest>=9.1.1", "ruff>=0.17.1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ftp_account_readers"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+strict = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["Crypto.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
