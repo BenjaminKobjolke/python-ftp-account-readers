@@ -10,24 +10,24 @@ from ftp_account_readers.helpers import parse_port
 from ftp_account_readers.models import FtpAccount, FtpProtocol
 
 
-def is_winscp_available() -> bool:
+def is_winscp_available(sessions_key: str = c.WINSCP_SESSIONS_KEY) -> bool:
     try:
         import winreg
     except ImportError:
         return False
     try:
-        winreg.CloseKey(winreg.OpenKey(winreg.HKEY_CURRENT_USER, c.WINSCP_SESSIONS_KEY))
+        winreg.CloseKey(winreg.OpenKey(winreg.HKEY_CURRENT_USER, sessions_key))
         return True
     except OSError:
         return False
 
 
-def read_winscp() -> list[FtpAccount]:
-    """Read WinSCP sessions from the current user's registry."""
+def read_winscp(sessions_key: str = c.WINSCP_SESSIONS_KEY) -> list[FtpAccount]:
+    """Read WinSCP sessions from a registry key relative to HKEY_CURRENT_USER."""
     import winreg
 
     accounts = []
-    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, c.WINSCP_SESSIONS_KEY) as root:
+    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, sessions_key) as root:
         for raw_name in _session_names(root):
             if raw_name == c.WINSCP_DEFAULT_SETTINGS_SESSION:
                 continue

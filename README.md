@@ -19,13 +19,17 @@ for account in accounts:
     print(account.describe())
 ```
 
-You can pass an explicit `Path` to `read_filezilla(path)` or `read_nppftp(path)`. Their defaults
-are `%APPDATA%/FileZilla/sitemanager.xml` and
-`%APPDATA%/Notepad++/plugins/config/NppFTP/NppFTP.xml`. WinSCP sessions are read from the current
-user's `Software\Martin Prikryl\WinSCP 2\Sessions` registry key on Windows.
+You can pass an explicit `Path` to `read_filezilla(path)` or `read_nppftp(path)`. The matching
+`is_filezilla_available(path)` and `is_nppftp_available(path)` functions accept the same optional
+`Path` and check that location. Their defaults are `%APPDATA%/FileZilla/sitemanager.xml` and
+`%APPDATA%/Notepad++/plugins/config/NppFTP/NppFTP.xml`.
 
-The public API also includes `FtpAccount`, `FtpProtocol`, and `is_winscp_available()`,
-`is_filezilla_available()`, and `is_nppftp_available()`.
+`read_winscp(sessions_key)` and `is_winscp_available(sessions_key)` accept an optional registry
+key relative to `HKEY_CURRENT_USER`. The default is
+`Software\Martin Prikryl\WinSCP 2\Sessions` on Windows.
+
+The public API also includes `FtpAccount`, `FtpProtocol`, and the availability checks
+`is_winscp_available()`, `is_filezilla_available()`, and `is_nppftp_available()`.
 
 ## Limits
 

@@ -11,19 +11,20 @@ from ftp_account_readers.helpers import join_folder, parse_port
 from ftp_account_readers.models import FtpAccount, FtpProtocol
 
 
-def _default_path() -> Path:
+def _source(path: Path | None) -> Path:
+    if path is not None:
+        return path
     appdata = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming"))
     return appdata / c.FILEZILLA_RELATIVE_PATH
 
 
-def is_filezilla_available() -> bool:
-    return _default_path().is_file()
+def is_filezilla_available(path: Path | None = None) -> bool:
+    return _source(path).is_file()
 
 
 def read_filezilla(path: Path | None = None) -> list[FtpAccount]:
     """Read FileZilla sites from `path` or the user's default site manager file."""
-    source = path if path is not None else _default_path()
-    servers = ET.parse(source).getroot().find(c.FZ_SERVERS)
+    servers = ET.parse(_source(path)).getroot().find(c.FZ_SERVERS)
     return [] if servers is None else list(_walk(servers, ""))
 
 

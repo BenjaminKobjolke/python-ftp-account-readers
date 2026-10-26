@@ -11,23 +11,24 @@ from ftp_account_readers.helpers import parse_port
 from ftp_account_readers.models import FtpAccount, FtpProtocol
 
 
-def _default_path() -> Path:
+def _source(path: Path | None) -> Path:
+    if path is not None:
+        return path
     appdata = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming"))
     return appdata / c.NPPFTP_RELATIVE_PATH
 
 
-def is_nppftp_available() -> bool:
+def is_nppftp_available(path: Path | None = None) -> bool:
     try:
         from Crypto.Cipher import DES  # noqa: F401
     except ImportError:
         return False
-    return _default_path().is_file()
+    return _source(path).is_file()
 
 
 def read_nppftp(path: Path | None = None) -> list[FtpAccount]:
     """Read NppFTP profiles from `path` or the user's default configuration file."""
-    source = path if path is not None else _default_path()
-    profiles = ET.parse(source).getroot().find(c.NPP_PROFILES)
+    profiles = ET.parse(_source(path)).getroot().find(c.NPP_PROFILES)
     if profiles is None:
         return []
     return [
