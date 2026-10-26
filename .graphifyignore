@@ -1,0 +1,3 @@
+# Keep the first-party source folder as the only scanned top-level directory.
+/*/
+!/src/
