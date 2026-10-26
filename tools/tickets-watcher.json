@@ -1,0 +1,16 @@
+{
+  "analysis_commands": [],
+  "analysis_commands_seen": {
+    "scripts": [
+      "graphify_update.bat"
+    ],
+    "tests": true
+  },
+  "analysis_code_quality_answered": true,
+  "files": {
+    "TICKETS_WATCHER_COMMANDS.md": 3
+  },
+  "command_check_scripts": [
+    "graphify_update.bat"
+  ]
+}
